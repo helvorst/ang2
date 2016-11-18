@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 @Component({
     selector: 'ang2',
     template: `
+    00000
        <md-grid-list cols="5"  [style.background]="'lightblue'" gutterSize="4px">
             <md-grid-tile>
                 <md-list dense>
