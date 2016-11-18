@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {Person} from './person'
 
 @Component({
 selector: 'person-details',
@@ -24,5 +25,7 @@ template: `
 export class PersonDetailsComponent{
 
     @Input()
-    personToDetail
+    personToDetail: Person;
+
+
 }

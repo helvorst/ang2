@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { Person } from './person';
+import { PersonService } from './person.service'
 
 @Component({
     selector: 'ang2',
     template: `
-    00000
        <md-grid-list cols="5"  [style.background]="'lightblue'" gutterSize="4px">
             <md-grid-tile>
                 <md-list dense>
@@ -21,11 +22,13 @@ import { Component } from '@angular/core';
        </md-grid-list>
       
       
-    `
+    `,
+    providers: [PersonService]
 })
-export class AppComponent { 
+export class AppComponent {
 
-    people = [{id: 0, name: 'Jill'}, {id: 1, name: 'Albert'}, {id: 2, name: 'Tom'}];
-    selectedPerson = this.people[0];
-  
+    constructor(private personService: PersonService) { };
+    people = this.personService.getPersons();
+    selectedPerson: Person = this.people[0];
+
 }
