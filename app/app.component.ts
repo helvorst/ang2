@@ -16,7 +16,7 @@ import { PersonService } from './person.service'
 
             <md-grid-tile>
                 <person-details [personToDetail] = selectedPerson>
-                
+                11
                 </person-details>
             </md-grid-tile>
        </md-grid-list>
