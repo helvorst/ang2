@@ -4,7 +4,7 @@ import {Person} from './person'
 @Component({
 selector: 'person-details',
 template: `
-<div>
+<div *ngIf="personToDetail">
  <md-card>
             <md-card-subtitle>Details of</md-card-subtitle>
             <md-card-title>{{personToDetail.name}}</md-card-title>   

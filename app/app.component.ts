@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Person } from './person';
 import { PersonService } from './person.service'
 
@@ -25,10 +25,19 @@ import { PersonService } from './person.service'
     `,
     providers: [PersonService]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
     constructor(private personService: PersonService) { };
-    people = this.personService.getPersons();
-    selectedPerson: Person = this.people[0];
+    people = [];
+    selectedPerson: Person = null;
+
+    ngOnInit(): void {
+
+        this.people = this.personService.getPersons();
+        this.selectedPerson = this.people[0];
+    }
+
+
+
 
 }
