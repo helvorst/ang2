@@ -33,7 +33,11 @@ export class AppComponent implements OnInit {
 
     ngOnInit(): void {
 
-        this.people = this.personService.getPersons();
+        this.personService.getPersons()
+        .then(prs => this.people = prs)
+        .catch(function(){
+            console.log('error get persons')
+        })
         this.selectedPerson = this.people[0];
     }
 
