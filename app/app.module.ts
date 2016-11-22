@@ -5,10 +5,9 @@ import { HttpModule } from '@angular/http'
 import { RouterModule } from '@angular/router'
 
 import { AppComponent } from './app.component';
-import { PersonListComponent } from './person-list.component'
-import {DashComponent} from './dash.component'
-import { PersonDetailsComponent } from './person-details.component';
-//11
+import { PersonListComponent } from './person-list/person-list.component'
+import {DashComponent} from './dash/dash.component'
+import { PersonDetailsComponent } from './person-details/person-details.component';
 
 @NgModule({
     imports: [
@@ -16,6 +15,12 @@ import { PersonDetailsComponent } from './person-details.component';
         MaterialModule.forRoot(),
         HttpModule,
         RouterModule.forRoot([
+            {
+                path: '',
+                redirectTo: '/dash',
+                pathMatch: 'full'
+
+            },
             {
                 path: 'person-list',
                 component: PersonListComponent

@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Person} from './person'
+import {Person} from  '../00_classes/person'
 
 @Component({
 selector: 'person-details',
