@@ -5,7 +5,6 @@ import { HttpModule } from '@angular/http'
 import { RouterModule } from '@angular/router'
 
 import { AppComponent } from './app.component';
-//import { PersonDetailsComponent } from './person-details.component';
 import { PersonListComponent } from './person-list.component'
 import {DashComponent} from './dash.component'
 import { PersonDetailsComponent } from './person-details.component';
