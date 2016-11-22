@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { PersonListComponent } from './person-list.component'
 import {DashComponent} from './dash.component'
 import { PersonDetailsComponent } from './person-details.component';
-
+//11
 
 @NgModule({
     imports: [
