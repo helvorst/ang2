@@ -3,7 +3,7 @@ import { Person } from './../00_classes/person';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Rx';
-import {Subscription} from 'rxjs/Subscription';
+import { Subscription } from 'rxjs/Subscription';
 
 
 
@@ -13,7 +13,10 @@ import {Subscription} from 'rxjs/Subscription';
 })
 export class DashComponent implements OnInit {
 
-    persons: Person[] = [];
+    //varianto 1
+    //persons: Person[] = [];
+    //varianto 2
+    persons: Observable<Person[]>;
     public searchBar: FormControl;
     public myGroup: FormGroup;
     searchSubscription: Subscription;
@@ -31,27 +34,34 @@ export class DashComponent implements OnInit {
 
     ngOnInit(): void {
         this.prsSrv.getPersons()
-            .then(resp => this.persons = resp)
-            .catch(function () { 'Cant get persons for dash' })
+            .then(/*resp => this.persons = resp*/)
+            .catch(function() { 'Cant get persons for dash' })
 
-        this.searchSubscription = this.searchBar.valueChanges
+        //varianto 1 
+        // this.searchSubscription = this.searchBar.valueChanges
+        //     //.filter((query: string) => query.length > 0)
+        //     .debounce(() => Observable.timer(250))
+        //     .map((query: string) => this.prsSrv.search(query))
+        //     .switch()
+        //     .subscribe((prs: Person[]) => this.persons = prs)
+
+        //varianto 2
+        this.persons = this.searchBar.valueChanges
             //.filter((query: string) => query.length > 0)
             .debounce(() => Observable.timer(250))
             .map((query: string) => this.prsSrv.search(query))
             .switch()
-            .subscribe((prs: Person[]) => this.persons = prs)
+
     }
 
     save(): void {
         console.log(this.persons)
     }
 
-    searchPersons() {
-        //this.prsSrv.search(this.search)
-    }
 
-    ngOnDestroy(){
-        this.searchSubscription.unsubscribe();
+    ngOnDestroy() {
+        //varianto 1
+        //this.searchSubscription.unsubscribe();
     }
 
 }
