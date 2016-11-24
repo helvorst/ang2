@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { PersonListComponent } from './person-list/person-list.component'
 import {DashComponent} from './dash/dash.component'
 import { PersonDetailsComponent } from './person-details/person-details.component';
+import { OrderByPipe } from './02_pipes/orderby.pipe';
 
 @NgModule({
     imports: [
@@ -35,7 +36,7 @@ import { PersonDetailsComponent } from './person-details/person-details.componen
             }
         ])
     ],
-    declarations: [AppComponent, PersonDetailsComponent, PersonListComponent, DashComponent],
+    declarations: [AppComponent, PersonDetailsComponent, PersonListComponent, DashComponent, OrderByPipe],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

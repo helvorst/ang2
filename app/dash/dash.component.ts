@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/Rx';
 
 @Component({
     selector: 'dash',
-    templateUrl: 'app/dash/dash.html'
+    templateUrl: 'app/dash/dash.html',
 })
 export class DashComponent implements OnInit {
 
