@@ -1,25 +1,36 @@
-import {Injectable} from '@angular/core'
-import {Person} from './person'
+import { Injectable } from '@angular/core'
+import { Person } from '../00_classes/person'
 import 'rxjs/add/operator/toPromise';
-import { Headers, Http } from '@angular/http';
+import { Headers, Http, URLSearchParams, RequestOptions, Response } from '@angular/http';
 
 @Injectable()
-export class PersonService{
+export class PersonService {
 
-    constructor(private http: Http){};
-    personsUrl = 'http://localhost:3030/persons';
+    constructor(private http: Http) { };
+  
 
-    //people: Person[] = [{id: 0, name: 'Jill'}, {id: 1, name: 'Albert'}, {id: 2, name: 'Tom'}];
+    getPersons(): Promise<Person[]> {
+        const baseUrl = 'http://localhost:3333/';
+        return this.http.get(baseUrl + 'persons')
+            .toPromise()
+            .then(rsp => rsp.json() as Person[])
+            .catch(this.handleError)
 
-    getPersons(): Promise<Person[]>{
-        return this.http.get(this.personsUrl)
-        .toPromise()
-        .then(rsp => rsp.json().data as Person[])
-        .catch(this.handleError)
-    
     }
 
-   private handleError(error: any):  Promise<any>{
+    search(search: string) {
+        const baseUrl = 'http://localhost:3333/';
+        let ro: RequestOptions = new RequestOptions(),
+            urlsp: URLSearchParams = new URLSearchParams();
+            urlsp.set('name_like', search);
+            ro.search = urlsp;
+            return this.http.get(baseUrl+'persons', ro)
+            .map(data => data.json())
+            .map(users => users.map(user => new Person(user)))
+    }
+
+
+    private handleError(error: any): Promise<any> {
         console.log(error)
         return Promise.reject(error.message || error)
     }

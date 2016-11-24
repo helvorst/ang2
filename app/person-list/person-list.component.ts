@@ -9,7 +9,7 @@ import { PersonService } from '../01_services/person.service'
     <md-grid-list cols="5"  [style.background]="'lightblue'" gutterSize="4px">
             <md-grid-tile>
                 <md-list dense>
-                      <md-list-item *ngFor="let person of people"> 
+                      <md-list-item  *ngFor="let person of people"> 
                           <button md-raised-button color="primary" (click)="selectedPerson=person">{{person.name}}</button>
                       </md-list-item>
                 </md-list>
@@ -21,7 +21,7 @@ import { PersonService } from '../01_services/person.service'
      </md-grid-list>
       
     `,
-    providers: [PersonService],
+
     //directives: [PersonDetailsComponent],
 })
 export class PersonListComponent implements OnInit {
@@ -30,14 +30,22 @@ export class PersonListComponent implements OnInit {
     people = [];
     selectedPerson: Person = null;
 
+    // fetchDetails() {
+        
+    //     this.personService.getPersons();
+    // }
+
     ngOnInit(): void {
 
         this.personService.getPersons()
-        .then(prs => this.people = prs)
-        .catch(function(){
-            console.log('error get persons')
-        })
-        this.selectedPerson = this.people[0];
+            .then(prs => {
+            this.people = prs
+                this.selectedPerson = this.people[0];
+            })
+            .catch(function () {
+                console.log('error get persons')
+            })
+
     }
 
 
