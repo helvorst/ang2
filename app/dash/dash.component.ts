@@ -3,6 +3,8 @@ import { Person } from './../00_classes/person';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Rx';
+import {Subscription} from 'rxjs/Subscription';
+
 
 
 @Component({
@@ -14,6 +16,7 @@ export class DashComponent implements OnInit {
     persons: Person[] = [];
     public searchBar: FormControl;
     public myGroup: FormGroup;
+    searchSubscription: Subscription;
 
 
     constructor(private prsSrv: PersonService) {
@@ -31,7 +34,7 @@ export class DashComponent implements OnInit {
             .then(resp => this.persons = resp)
             .catch(function () { 'Cant get persons for dash' })
 
-        this.searchBar.valueChanges
+        this.searchSubscription = this.searchBar.valueChanges
             //.filter((query: string) => query.length > 0)
             .debounce(() => Observable.timer(250))
             .map((query: string) => this.prsSrv.search(query))
@@ -47,5 +50,8 @@ export class DashComponent implements OnInit {
         //this.prsSrv.search(this.search)
     }
 
+    ngOnDestroy(){
+        this.searchSubscription.unsubscribe();
+    }
 
 }
