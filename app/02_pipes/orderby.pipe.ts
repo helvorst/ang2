@@ -6,6 +6,9 @@ import { Pipe } from '@angular/core'
 
 export class OrderByPipe {
     transform(array: any, arg: string): any {
+        
+        if(!array.length) return;
+        
         array.sort((a: any, b: any) => {
             if (a[arg] < b[arg]) return -1;
             if (a[arg] > b[arg]) return 1;

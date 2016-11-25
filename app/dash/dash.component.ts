@@ -14,12 +14,14 @@ import { Subscription } from 'rxjs/Subscription';
 export class DashComponent implements OnInit {
 
     //varianto 1
-    //persons: Person[] = [];
-    //varianto 2
-    persons: Observable<Person[]>;
+    persons: Person[] = [];
+    //varianto 2 
+    personsObservable: Observable<Person[]>;
+
     public searchBar: FormControl;
     public myGroup: FormGroup;
     searchSubscription: Subscription;
+    allSubscription: Subscription;
 
 
     constructor(private prsSrv: PersonService) {
@@ -33,35 +35,46 @@ export class DashComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.prsSrv.getPersons()
-            .then(/*resp => this.persons = resp*/)
-            .catch(function() { 'Cant get persons for dash' })
 
+        this.getPersons();
         //varianto 1 
-        // this.searchSubscription = this.searchBar.valueChanges
+        this.searchSubscription = this.searchBar.valueChanges
+            //
+            .debounce(() => Observable.timer(250))
+            .distinctUntilChanged()
+            .map((query: string) => this.prsSrv.search(query))
+            .switch()
+            .subscribe((prs: Person[]) => this.persons = prs)
+
+        //...u can use promises
+        // with service.function signature like: getPersons(): Promise<Person[]> 
+        // this.prsSrv.getPersons()
+        //     .then(resp => this.persons = resp)
+        //     .catch(function() { 'Cant get persons for dash' })
+
+        //varianto 2: u can use array of observables with |async
+        // this.personsObservable = this.searchBar.valueChanges
         //     //.filter((query: string) => query.length > 0)
         //     .debounce(() => Observable.timer(250))
         //     .map((query: string) => this.prsSrv.search(query))
         //     .switch()
-        //     .subscribe((prs: Person[]) => this.persons = prs)
 
-        //varianto 2
-        this.persons = this.searchBar.valueChanges
-            //.filter((query: string) => query.length > 0)
-            .debounce(() => Observable.timer(250))
-            .map((query: string) => this.prsSrv.search(query))
-            .switch()
+         //.switchMap(term => this.wikipediaService.search(term));
 
     }
 
-    save(): void {
-        console.log(this.persons)
+    getPersons(): void {
+        this.allSubscription = this.prsSrv.getPersons()
+            .subscribe((prs: Person[]) => this.persons = prs)
+
+        //this.personsObservable = this.prsSrv.getPersons()
     }
 
 
     ngOnDestroy() {
-        //varianto 1
-        //this.searchSubscription.unsubscribe();
+
+        this.searchSubscription.unsubscribe();
+        this.allSubscription.unsubscribe();
     }
 
 }

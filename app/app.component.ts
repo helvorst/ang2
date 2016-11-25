@@ -5,7 +5,8 @@ import { PersonService } from './01_services/person.service'
 
 @Component({
   selector: 'ang2',
-  template: `
+  template:  
+  `
 
    <md-toolbar color="primary">
       <span class="hel-title">Ang 2</span>
