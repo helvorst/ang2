@@ -1,13 +1,26 @@
-import { Injectable, Inject} from '@angular/core'
+
+import { Injectable, Inject } from '@angular/core'
 import { Person } from '../00_classes/person'
 import 'rxjs/add/operator/toPromise';
 import { Headers, Http, URLSearchParams, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
-import { APP_CONFIG, appInterface} from '../app.config'
+
+import { APP_CONFIG, appInterface } from '../app.config'
+
+import { ErrorService } from './error.service';
+import { HiService } from './../01_services/hi.service';
+
+
+
 @Injectable()
 export class PersonService {
 
-    constructor(private http: Http, @Inject(APP_CONFIG) private cfg/*: appInterface*/) { };
+    constructor(
+        private http: Http,
+        @Inject(APP_CONFIG) private cfg  /*: appInterface*/,
+        private errorSrv: ErrorService,
+        private hiSrv: HiService
+    ) { };
 
 
     //...with promise
@@ -25,12 +38,19 @@ export class PersonService {
     // }
 
     getPersons(): Observable<Person[]> {
+
+        //setTimeout(()=>{console.log('me done')}, 10000)
+
         return this.http.get(this.cfg.apiBase + 'persons')
+            .do(() => this.hiSrv.spinnerOnOff(true))
+            //.delay(1000)
             .map(data => data.json())
             .map(users => users.map(user => new Person(user)))
-            .catch((err:any) => Observable.throw(err || 'cant get persons'))
+            .do(() => this.hiSrv.spinnerOnOff(false))
+            .catch((err: any) => this.errorSrv.handleErrorObservable(err, 'service "person" cant get persons'))
 
     }
+
 
     search(search: string) {
         let ro: RequestOptions = new RequestOptions(),
@@ -41,9 +61,9 @@ export class PersonService {
         return this.http.get(this.cfg.apiBase + 'persons', ro)
             .map(data => data.json())
             .map(users => users.map(user => new Person(user)))
-            .catch((err:any) => Observable.throw(err || 'cant search persons'))
+            .catch((err: any) => this.errorSrv.handleErrorObservable(err, 'service "person" cant search persons'))
     }
 
 
-  
+
 }

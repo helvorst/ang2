@@ -1,44 +1,15 @@
+
+import { appCfg } from './app.config';
 import { Component, OnInit, ElementRef, ViewChild, Renderer } from '@angular/core';
 import { Person } from './00_classes/person';
 import { PersonService } from './01_services/person.service'
-
+import { ErrorService } from './01_services/error.service';
+import { HiService } from './01_services/hi.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'ang2',
-  template:  
-  `
-
-   <md-toolbar color="primary">
-      <span class="hel-title">Ang 2</span>
-      <!-- This fills the remaining space of the current row -->
-      <span class="hel-toolbar">
-        <button md-mini-fab (click)="start.opened ? start.close() : start.open()">
-              <md-icon class="md-24">dashboard</md-icon>
-        </button>
-      </span>
-      <span>smth</span>
-   </md-toolbar>
-  
-   
-    <md-sidenav-layout>
-      <md-sidenav #start >
-        <md-list>
-          <md-list-item>
-              <button md-button routerLink='/person-list' (click)="closeMenu()">List</button>
-          </md-list-item>
-          <md-list-item>
-              <button md-button routerLink='/dash' (click)="closeMenu()" >Dash</button>
-          </md-list-item>
-        </md-list>
-      </md-sidenav>
-
-      <router-outlet></router-outlet>
-
-  </md-sidenav-layout>
-  
-    
-      
-    `,
+  templateUrl: 'app.component.html',
   styles: [`
     .hel-toolbar {
       flex: 8;
@@ -46,13 +17,21 @@ import { PersonService } from './01_services/person.service'
     .hel-title {
       flex: 1;
    }
+ 
    `
   ],
-   providers: [PersonService],
+  providers: [PersonService, ErrorService, HiService],
 })
 export class AppComponent {
 
+  constructor(
+    errorSrv: ErrorService
+  ) {
+
+  }
+
   @ViewChild('start') start: ElementRef;
+
 
 
   closeMenu = function () {

@@ -1,8 +1,13 @@
-<md-grid-list cols="5"  [style.background]="'lightblue'" gutterSize="4px">
+<hi></hi>
+
+<md-grid-list *ngIf="(people |async)?.length>0" cols="5"  [style.background]="'lightblue'" gutterSize="4px">
             <md-grid-tile>
+                <!--[@bigBtn]="selectedPerson.id==person.id"   -->
                 <md-list dense>
                       <md-list-item  *ngFor="let person of people |async"> 
-                          <button md-raised-button color="primary" (click)="selectedPerson=person">{{person.name}}</button>
+                          <button md-raised-button color="primary"                      
+                           [@flyInOut] [@bigBtn]="selectedPerson?.id==person?.id ? 'active' : 'null'"
+                          (click)="selectedPerson=person;">{{person.name}}</button>
                       </md-list-item>
                 </md-list>
             </md-grid-tile>

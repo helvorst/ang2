@@ -1,0 +1,7 @@
+<div class="centerHolder" *ngIf="hiSrv.spinner">
+    <md-spinner></md-spinner>
+</div>
+
+<md-card class="alert" *ngIf="errorMessage">
+    {{errorMessage}}
+</md-card>
