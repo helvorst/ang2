@@ -37,13 +37,17 @@ export class PersonService {
     //     return Promise.reject(error.message || error)
     // }
 
+
     getPersons(): Observable<Person[]> {
 
         //setTimeout(()=>{console.log('me done')}, 10000)
 
+        this.hiSrv.init();
+        
+
         return this.http.get(this.cfg.apiBase + 'persons')
-            .do(() => this.hiSrv.spinnerOnOff(true))
-            //.delay(1000)
+            //.do(() => {})
+            //.delay(5000)
             .map(data => data.json())
             .map(users => users.map(user => new Person(user)))
             .do(() => this.hiSrv.spinnerOnOff(false))

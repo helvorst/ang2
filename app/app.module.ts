@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MaterialModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
-import { RouterModule } from '@angular/router';
+
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -15,6 +15,8 @@ import { OrderByPipe } from './02_pipes/orderby.pipe';
 
 import { APP_CONFIG, appCfg } from './app.config'
 
+import {ROUTES} from './routes'
+
 @NgModule({
     imports: [
         BrowserModule,
@@ -22,22 +24,7 @@ import { APP_CONFIG, appCfg } from './app.config'
         ReactiveFormsModule,
         MaterialModule.forRoot(),
         HttpModule,
-        RouterModule.forRoot([
-            {
-                path: '',
-                redirectTo: '/dash',
-                pathMatch: 'full'
-
-            },
-            {
-                path: 'person-list',
-                component: PersonListComponent
-            },
-            {
-                path: 'dash',
-                component: DashComponent
-            }
-        ])
+        ROUTES
     ],
     declarations: [AppComponent, PersonDetailsComponent, PersonListComponent, DashComponent, OrderByPipe, HiComponent],
     bootstrap: [AppComponent],

@@ -1,7 +1,6 @@
 <div class="centerHolder" *ngIf="hiSrv.spinner">
     <md-spinner></md-spinner>
 </div>
-
-<md-card class="alert" *ngIf="errorMessage">
-    {{errorMessage}}
+<md-card [@error]='hiSrv.error ? "showerror" : null' *ngIf="hiSrv.error">
+    {{hiSrv.error}}
 </md-card>
