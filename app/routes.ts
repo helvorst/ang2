@@ -1,3 +1,4 @@
+import { AdminModule } from './03_lazy/admin/admin.module';
 import { DashComponent } from './dash/dash.component';
 import { PersonListComponent } from './person-list/person-list.component';
 
@@ -21,7 +22,7 @@ let routes = [
     },
     {
         path: "admin",
-        loadChildren: 'app/03_lazy/admin/admin.module' /*() => { System.import('./03_lazy/admin.module') }*/
+        loadChildren: 'app/03_lazy/admin/admin.module#AdminModule' /*() => { System.import('./03_lazy/admin.module') }*/
     }
 ];
 
